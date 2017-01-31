@@ -1,7 +1,7 @@
 package com.gowtham.service;
 
 import com.gowtham.dao.SeatDAO;
-import com.gowtham.exception.SeatNotFoundException;
+import com.gowtham.exception.ValidationException;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.model.Seat;
 import com.gowtham.validator.SeatValidator;
@@ -16,7 +16,7 @@ public class SeatService {
 		try {
 			seatValidator.validateSave(s);
 			seatDAO.save(s);
-		} catch (SeatNotFoundException e) {
+		} catch (ValidationException e) {
 			throw new ServiceException("unable to insert Seat",e);
 		}
 

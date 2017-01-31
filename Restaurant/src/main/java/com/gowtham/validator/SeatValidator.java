@@ -1,37 +1,37 @@
 package com.gowtham.validator;
 
-import com.gowtham.exception.SeatNotFoundException;
+import com.gowtham.exception.ValidationException;
 import com.gowtham.model.Seat;
 import com.gowtham.util.ValidationUtil;
 
 
 public class SeatValidator{
 	
-	private void validateSeat(Seat seat) throws SeatNotFoundException {
+	private void validateSeat(Seat seat) throws ValidationException {
 		if (seat==null) {
-				throw new SeatNotFoundException("Invalid Seat");
+				throw new ValidationException("Invalid Seat");
 		}
 	}
 	
-	private void validateSeatNumber(Integer number)throws SeatNotFoundException{
+	private void validateSeatNumber(Integer number)throws ValidationException{
 			if (ValidationUtil.isNotValid(number)) {
-				throw new SeatNotFoundException("Invalid Seat Number Input"); 
+				throw new ValidationException("Invalid Seat Number Input"); 
 			}
 		}
 	
-	private void validateActive(Boolean active)throws SeatNotFoundException{
+	private void validateActive(Boolean active)throws ValidationException{
 		if (ValidationUtil.isNotValid(active)){
-			throw new SeatNotFoundException("Invalid Active Input");
+			throw new ValidationException("Invalid Active Input");
 		}
 	}
 	
-	public void validateSave(Seat seat) throws SeatNotFoundException{
+	public void validateSave(Seat seat) throws ValidationException{
 		validateSeat(seat);
 		validateSeatNumber(seat.getNumber());
 		validateActive(seat.getActive());
 	}
 	
-	public void Validatedelete(Seat seat) throws SeatNotFoundException{
+	public void Validatedelete(Seat seat) throws ValidationException{
 		validateSeat(seat);
 		validateSeatNumber(seat.getNumber());
 	}
