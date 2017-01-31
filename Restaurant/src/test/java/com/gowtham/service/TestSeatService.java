@@ -5,7 +5,7 @@ import com.gowtham.model.Seat;
 
 public class TestSeatService {
 
-	public static void main(String[] args) throws ServiceException {
+	public static void main(String[] args) {
 		Seat seat = new Seat(); 
 		seat.setNumber(null);
 		seat.setActive(false);

@@ -8,13 +8,13 @@ import com.gowtham.util.ValidationUtil;
 public class SeatValidator{
 	
 	private void validateSeat(Seat seat) throws ValidationException {
-		if (seat==null) {
+		if (ValidationUtil.isNotValid(seat)) {
 				throw new ValidationException("Invalid Seat");
 		}
 	}
 	
-	private void validateSeatNumber(Integer number)throws ValidationException{
-			if (ValidationUtil.isNotValid(number)) {
+	private void validateSeatNumber(Integer seatnumber)throws ValidationException{
+			if (ValidationUtil.isNotValid(seatnumber)) {
 				throw new ValidationException("Invalid Seat Number Input"); 
 			}
 		}
@@ -31,7 +31,7 @@ public class SeatValidator{
 		validateActive(seat.getActive());
 	}
 	
-	public void Validatedelete(Seat seat) throws ValidationException{
+	public void validateDelete(Seat seat) throws ValidationException{
 		validateSeat(seat);
 		validateSeatNumber(seat.getNumber());
 	}
