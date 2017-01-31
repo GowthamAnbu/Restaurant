@@ -1,5 +1,6 @@
-package com.gowtham.dao;
+package com.gowtham.service;
 
+import com.gowtham.dao.OrderDAO;
 import com.gowtham.model.Order;
 import com.gowtham.model.Seat;
 

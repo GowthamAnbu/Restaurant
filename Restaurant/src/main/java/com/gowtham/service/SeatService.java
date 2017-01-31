@@ -2,6 +2,7 @@ package com.gowtham.service;
 
 import com.gowtham.dao.SeatDAO;
 import com.gowtham.exception.SeatNotFoundException;
+import com.gowtham.exception.ServiceException;
 import com.gowtham.model.Seat;
 import com.gowtham.validator.SeatValidator;
 
@@ -10,19 +11,14 @@ public class SeatService {
 	private SeatValidator seatValidator = new SeatValidator();
 	private SeatDAO seatDAO = new SeatDAO();
 
-	public void save(Seat s) throws SeatNotFoundException {
+	public void save(Seat s) throws ServiceException {
 
 		try {
-			seatValidator.validateSeat(s);
-
-			if (seatDAO.isPresent(s.getNumber())) {
-				throw new SeatNotFoundException("Seat already Exists");
-			}
-			seatDAO.save(s);//if noexception
-
+			seatValidator.validateSave(s);
+			seatDAO.save(s);
 		} catch (SeatNotFoundException e) {
 			e.printStackTrace();
-			throw e;
+			throw new ServiceException("unable to insert Seat",e);
 		}
 
 	}

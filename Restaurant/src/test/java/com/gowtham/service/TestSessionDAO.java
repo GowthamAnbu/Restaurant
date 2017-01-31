@@ -1,7 +1,8 @@
-package com.gowtham.dao;
+package com.gowtham.service;
 
 import java.time.LocalTime;
 
+import com.gowtham.dao.SessionDAO;
 import com.gowtham.model.Session;
 
 public class TestSessionDAO {

@@ -1,5 +1,6 @@
-package com.gowtham.dao;
+package com.gowtham.service;
 
+import com.gowtham.dao.FoodDetailsDAO;
 import com.gowtham.model.Food;
 import com.gowtham.model.FoodDetails;
 import com.gowtham.model.Session;

@@ -1,5 +1,6 @@
-package com.gowtham.dao;
+package com.gowtham.service;
 
+import com.gowtham.dao.FoodDAO;
 import com.gowtham.model.Food;
 
 public class TestFoodDAO {

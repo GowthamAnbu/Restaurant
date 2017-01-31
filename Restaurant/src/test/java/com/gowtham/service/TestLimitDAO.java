@@ -1,5 +1,6 @@
-package com.gowtham.dao;
+package com.gowtham.service;
 
+import com.gowtham.dao.LimitDAO;
 import com.gowtham.model.Limit;
 
 public class TestLimitDAO {
