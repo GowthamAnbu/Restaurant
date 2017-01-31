@@ -17,7 +17,6 @@ public class SeatService {
 			seatValidator.validateSave(s);
 			seatDAO.save(s);
 		} catch (SeatNotFoundException e) {
-			e.printStackTrace();
 			throw new ServiceException("unable to insert Seat",e);
 		}
 
