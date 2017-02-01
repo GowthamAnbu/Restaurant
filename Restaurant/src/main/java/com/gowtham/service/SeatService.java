@@ -59,7 +59,7 @@ public class SeatService {
 
 	}
 	
-	public List<Seat> findAll(Seat seat) throws ServiceException{
+	public List<Seat> findAll(){
 			return seatDAO.findAll();
 	}
 	

@@ -5,9 +5,11 @@ import java.time.LocalTime;
 import com.gowtham.exception.ValidationException;
 
 public class ValidationUtil {
-	
+	private ValidationUtil(){
+		
+	}
 	public static boolean isValid(Object obj){
-		return(obj!=null);
+		return obj!=null;
 	}
 	
 	public static void isNotValid(Object object,String message)throws ValidationException{
@@ -17,7 +19,7 @@ public class ValidationUtil {
 	}
 	
 	public static boolean isValid(Integer number){
-		return(number!=null && number >0);
+		return number!=null && number >0;
 	}
 	
 	public static void isNotValid(Integer number,String message)throws ValidationException{
@@ -27,7 +29,7 @@ public class ValidationUtil {
 	}
 	
 	public static boolean isValid(String string) {
-		return (string != null && !"".equals(string.trim()));
+		return string != null && !"".equals(string.trim());
 	}
 	
 	public static void isNotValid(String string,String message) throws ValidationException{
@@ -37,7 +39,7 @@ public class ValidationUtil {
 	}
 	
 	public static boolean isValid(Boolean boolnumber){
-		return(boolnumber!=null);
+		return boolnumber!=null;
 	}
 	
 	public static void isNotValid(Boolean boolnumber,String message)throws ValidationException{
@@ -47,7 +49,7 @@ public class ValidationUtil {
 	}
 	
 	public static boolean isValid(LocalTime time){
-		return(time!=null);
+		return time!=null;
 	}
 	
 	public static void isNotValid(LocalTime time,String message)throws ValidationException{

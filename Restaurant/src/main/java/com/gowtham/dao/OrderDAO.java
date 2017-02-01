@@ -3,6 +3,8 @@ package com.gowtham.dao;
 import java.sql.Types;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.SqlOutParameter;
@@ -16,7 +18,8 @@ import com.gowtham.util.ConnectionUtil;
 
 public class OrderDAO {
 	JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
-	
+	public static final Logger logger = Logger.getLogger(OrderDAO.class.getName());
+	String result="result";
 	public int save(final Order order) {
 		final String sql = "insert into ORDERS (SEAT_NUMBER,TOTAL_PRICE,STATUS) VALUES(?,?,?)";
 		final Object[] params = { order.getSeat().getNumber(), order.getTotalPrice(), order.getStatus() };
@@ -36,7 +39,7 @@ public class OrderDAO {
 
 	public List<Order> list() {
 		final String sql = "SELECT ID,SEAT_NUMBER,TOTAL_PRICE,STATUS FROM ORDERS";
-		final List<Order> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
+		return jdbcTemplate.query(sql, (rs, rowNum) -> {
 			final Order order = new Order();
 			order.setId(rs.getInt("ID"));
 			final Seat seat = new Seat();
@@ -46,13 +49,6 @@ public class OrderDAO {
 			order.setStatus(rs.getString("STATUS"));
 			return order;
 		});
-		return list;
-		/*final ListIterator<Order> listIterator = list.listIterator();
-		while (listIterator.hasNext()) {
-			final Order order = listIterator.next();
-			System.out.println("ID : " + order.getId() + " " + "SEAT NUMBER : " + order.getSeat().getNumber() + " "
-					+ "TOTAL PRICE : " + order.getTotalPrice() + " " + "STATUS : " + order.getStatus());
-		}*/
 	}
 
 	public Boolean isAvailable(Integer id) {
@@ -60,13 +56,13 @@ public class OrderDAO {
 		Object[] args = { id };
 		return jdbcTemplate.queryForObject(sql, args, Boolean.class);
 	}
-
+	
 	public void placeOrder(Integer seatNumber, String itemName, String quantity) {
 		SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate);
 		call.withProcedureName("place_orders");
 		call.declareParameters(new SqlParameter("lseat_number", Types.TINYINT),
 				new SqlParameter("litem_name", Types.VARCHAR), new SqlParameter("lquantity", Types.VARCHAR),
-				new SqlOutParameter("result", Types.VARCHAR));
+				new SqlOutParameter(result, Types.VARCHAR));
 		call.setAccessCallParameterMetaData(false);
 		MapSqlParameterSource in = new MapSqlParameterSource();
 		in.addValue("lseat_number", seatNumber);
@@ -74,34 +70,34 @@ public class OrderDAO {
 		in.addValue("lquantity", quantity);
 
 		Map<String, Object> execute = call.execute(in);
-		String status = (String) execute.get("result");
-		System.out.println(status);
+		String status = (String) execute.get(result);
+		logger.log(Level.INFO, "%s" , status);
 	}
 
 	public void cancelOrder(Integer orderId) {
 		SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate);
 		call.withProcedureName("cancel_order");
-		call.declareParameters(new SqlParameter("lid", Types.INTEGER), new SqlOutParameter("result", Types.VARCHAR));
+		call.declareParameters(new SqlParameter("lid", Types.INTEGER), new SqlOutParameter(result, Types.VARCHAR));
 		call.setAccessCallParameterMetaData(false);
 		MapSqlParameterSource in = new MapSqlParameterSource();
 		in.addValue("lid", orderId);
 		Map<String, Object> execute = call.execute(in);
-		String status = (String) execute.get("result");
-		System.out.println(status);
+		String status = (String) execute.get(result);
+		logger.log(Level.INFO, "%s" , status);
 	}
 
 	public void cancelFoodOrder(Integer orderId, String foodname) {
 		SimpleJdbcCall call = new SimpleJdbcCall(jdbcTemplate);
 		call.withProcedureName("cancel_food_order");
 		call.declareParameters(new SqlParameter("lid", Types.INTEGER), new SqlParameter("lfood_name", Types.VARCHAR),
-				new SqlOutParameter("result", Types.VARCHAR));
+				new SqlOutParameter(result, Types.VARCHAR));
 		call.setAccessCallParameterMetaData(false);
 		MapSqlParameterSource in = new MapSqlParameterSource();
 		in.addValue("lid", orderId);
 		in.addValue("lfood_name", foodname);
 		Map<String, Object> execute = call.execute(in);
-		String status = (String) execute.get("result");
-		System.out.println(status);
+		String status = (String) execute.get(result);
+		logger.log(Level.INFO, "%s" , status);
 	}
 
 }

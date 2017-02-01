@@ -15,7 +15,7 @@ public class OrderService {
 			orderValidator.validateSave(order);
 			return orderDAO.save(order);
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Insert Seat");
+			throw new ServiceException("unable to Insert Seat",e);
 		}	
 	}
 	
@@ -24,7 +24,7 @@ public class OrderService {
 			orderValidator.validateUpdate(order);
 			return orderDAO.update(order.getId(),order.getStatus());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Update Seat");
+			throw new ServiceException("unable to Update Seat",e);
 		}	
 	}
 
@@ -33,7 +33,7 @@ public class OrderService {
 			orderValidator.validateDelete(order);
 			return orderDAO.delete(order.getId());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Delete Seat");
+			throw new ServiceException("unable to Delete Seat",e);
 		}	
 	}
 	

@@ -16,7 +16,7 @@ public class FoodService {
 			foodValidator.validateSave(food);
 			return limitDAO.save(food);
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Insert Seat");
+			throw new ServiceException("unable to Insert Seat",e);
 		}
 	}
 	
@@ -25,7 +25,7 @@ public class FoodService {
 			foodValidator.validateUpdate(food);
 			return limitDAO.update(food.getId(),food.getPrice());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Update Seat");
+			throw new ServiceException("unable to Update Seat",e);
 		}
 	}
 	
@@ -34,7 +34,7 @@ public class FoodService {
 			foodValidator.validateDelete(food);
 			return limitDAO.delete(food.getId());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to delete Seat");
+			throw new ServiceException("unable to delete Seat",e);
 		}
 	}
 	

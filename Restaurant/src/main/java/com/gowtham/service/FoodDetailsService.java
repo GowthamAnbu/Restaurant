@@ -15,7 +15,7 @@ public class FoodDetailsService {
 			foodDetailsValidator.validateSave(foodDetails);
 			return foodDetailsDAO.save(foodDetails);
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Insert Seat");
+			throw new ServiceException("unable to Insert Seat",e);
 		}	
 	}
 
@@ -24,7 +24,7 @@ public class FoodDetailsService {
 			foodDetailsValidator.validateUpdate(foodDetails);
 			return foodDetailsDAO.update(foodDetails.getId(),foodDetails.getQuantity());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Update Seat");
+			throw new ServiceException("unable to Update Seat",e);
 		}	
 	}
 	
@@ -33,7 +33,7 @@ public class FoodDetailsService {
 			foodDetailsValidator.validateDelete(foodDetails);
 			return foodDetailsDAO.delete(foodDetails.getId());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Delete Seat");
+			throw new ServiceException("unable to Delete Seat",e);
 		}	
 	}
 	

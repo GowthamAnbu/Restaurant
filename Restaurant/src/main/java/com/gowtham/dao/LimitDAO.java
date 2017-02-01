@@ -34,18 +34,13 @@ public class LimitDAO implements DAO<Limit>{
 	@Override
 	public List<Limit> findAll(){
 		final String sql="select ID,NAME,MAX_LIMIT FROM SEED_LIMIT";
-		final List<Limit> list = jdbcTemplate.query(sql,(rs,rowNum)->{
+		return jdbcTemplate.query(sql,(rs,rowNum)->{
 			final Limit limit = new Limit();
 			limit.setId(rs.getInt("ID"));
 			limit.setName(rs.getString("NAME"));
 			limit.setMaxLimit(rs.getInt("MAX_LIMIT"));
 			return limit;
 		});
-		/*final ListIterator<Limit> listIterator=list.listIterator();
-		while(listIterator.hasNext()){
-			System.out.println(listIterator.next());
-		}*/
-		return list;
 		
 	}
 
@@ -53,13 +48,12 @@ public class LimitDAO implements DAO<Limit>{
 	public Limit findOne(final Integer id) {
 		final String sql="select ID,NAME,MAX_LIMIT FROM SEED_LIMIT WHERE ID=?";
 		Object[] args={id};
-		final Limit limit = jdbcTemplate.queryForObject(sql, args, (rs,rowNum)->{
+		return jdbcTemplate.queryForObject(sql, args, (rs,rowNum)->{
 			final Limit l = new Limit();
 			l.setId(rs.getInt("ID"));
 			l.setName(rs.getString("NAME"));
 			l.setMaxLimit(rs.getInt("MAX_LIMIT"));
 			return l;
 		});
-		return limit;
 	}
 }

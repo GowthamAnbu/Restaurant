@@ -33,7 +33,7 @@ public class FoodDetailsDAO {
 	
 	public List<FoodDetails> list(){
 		final String sql="SELECT ID,FOOD_ID,SESSION_ID,QUANTITY FROM FOOD_SESSION_MAINTENANCE";
-		final List<FoodDetails> list=jdbcTemplate.query(sql, (rs,rowNum)->{
+		return jdbcTemplate.query(sql, (rs,rowNum)->{
 			final FoodDetails foodDetails = new FoodDetails();
 			foodDetails.setId(rs.getInt("ID"));
 			final Food food = new Food();
@@ -45,15 +45,6 @@ public class FoodDetailsDAO {
 			foodDetails.setQuantity(rs.getInt("QUANTITY"));
 			return foodDetails;
 		});
-		return list;
-		/*final ListIterator<FoodDetails> listIterator=list.listIterator();
-		while(listIterator.hasNext()){
-			final FoodDetails foodDetails = listIterator.next();
-			System.out.println("ID : "+foodDetails.getId()+" "+
-			"FOOD ID : "+foodDetails.getFood().getId()+" "+
-			"SESSION ID : "+foodDetails.getSession().getId()+" "+
-			"QUANTITY : "+foodDetails.getQuantity());
-		}*/
 	}
 
 }

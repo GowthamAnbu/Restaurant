@@ -34,7 +34,7 @@ public class SessionDAO {
 	}
 	public List<Session> list(){
 	final String sql="SELECT ID,NAME,START_TIME,END_TIME FROM SEED_SESSION";
-	final List<Session> list=jdbcTemplate.query(sql,(rs,rowNum)->{
+	return jdbcTemplate.query(sql,(rs,rowNum)->{
 		final Session session = new Session();
 		session.setId(rs.getInt("ID"));
 		session.setName(rs.getString("NAME"));
@@ -42,11 +42,6 @@ public class SessionDAO {
 		session.setEndTime(rs.getTime("END_TIME").toLocalTime());
 		return session;
 	});
-	return list;
-	/*final ListIterator<Session> listIterator=list.listIterator();
-		while(listIterator.hasNext()){
-			System.out.println(listIterator.next());
-		}*/
 	}
 	
 }

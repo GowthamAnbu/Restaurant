@@ -18,7 +18,7 @@ public class LimitService {
 			limitValidator.validateSave(limit);
 			return limitDAO.save(limit);
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Insert Seat");
+			throw new ServiceException("unable to Insert Seat",e);
 		}
 	}
 	
@@ -27,7 +27,7 @@ public class LimitService {
 			limitValidator.validateUpdate(limit);
 			return limitDAO.update(limit);
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Update Seat");
+			throw new ServiceException("unable to Update Seat",e);
 		}
 	}
 	
@@ -36,7 +36,7 @@ public class LimitService {
 			limitValidator.validateDelete(limit);
 			return limitDAO.delete(limit.getId());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to delete Seat");
+			throw new ServiceException("unable to delete Seat",e);
 		}
 	}
 	public List<Limit> findAll(){
@@ -48,7 +48,7 @@ public class LimitService {
 			limitValidator.validateDelete(limit);
 			return limitDAO.findOne(limit.getId());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to delete Seat");
+			throw new ServiceException("unable to delete Seat",e);
 		}
 	}
 	

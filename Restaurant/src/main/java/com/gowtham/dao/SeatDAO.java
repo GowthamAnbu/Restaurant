@@ -39,18 +39,13 @@ public class SeatDAO implements DAO<Seat>{
 	public List<Seat> findAll() {
 
 		final String sql = "select SEAT_NUMBER,ACTIVE FROM SEED_SEAT";
-		final List<Seat> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
+		return jdbcTemplate.query(sql, (rs, rowNum) -> {
 			final Seat seat = new Seat();
 			seat.setNumber(rs.getInt("SEAT_NUMBER"));
 			seat.setActive(rs.getBoolean("ACTIVE"));
 			return seat;
 
 		});
-		return list;
-		/*final ListIterator<Seat> listIterator=list.listIterator();
-		while(listIterator.hasNext()){
-			System.out.println(listIterator.next());
-		}*/	
 	}
 
 	@Override
@@ -58,24 +53,18 @@ public class SeatDAO implements DAO<Seat>{
 
 		final String sql = "select SEAT_NUMBER,ACTIVE FROM SEED_SEAT WHERE SEATNUMBER=?";
 		Object[] args={id};
-		final Seat seat = jdbcTemplate.queryForObject(sql, args, (rs, rowNum) -> {
+		return jdbcTemplate.queryForObject(sql, args, (rs, rowNum) -> {
 			final Seat s = new Seat();
 			s.setNumber(rs.getInt("SEAT_NUMBER"));
 			s.setActive(rs.getBoolean("ACTIVE"));
 			return s;
 		});
-		return seat;
-		/*final ListIterator<Seat> listIterator=list.listIterator();
-		while(listIterator.hasNext()){
-			System.out.println(listIterator.next());
-		}*/	
 	}
 	
 	public Boolean isPresent(final Integer number){
 		String sql="select isseat_number(?)";
 		Object[] args={number};
-		Boolean result = jdbcTemplate.queryForObject(sql,args,Boolean.class);
-		return result;
+		return jdbcTemplate.queryForObject(sql,args,Boolean.class);
 	}
 	
 	

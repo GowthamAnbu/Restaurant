@@ -15,7 +15,7 @@ public class SessionService {
 			sessionValidator.validateSave(session);
 			return sessionDAO.save(session);
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Insert Seat");
+			throw new ServiceException("unable to Insert Seat",e);
 		}	
 	}
 	
@@ -24,7 +24,7 @@ public class SessionService {
 			sessionValidator.validateUpdate(session);
 			return sessionDAO.update(session.getId(),session.getStartTime(),session.getEndTime());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Update Seat");
+			throw new ServiceException("unable to Update Seat",e);
 		}	
 	}
 	
@@ -33,7 +33,7 @@ public class SessionService {
 			sessionValidator.validateDelete(session);
 			return sessionDAO.delete(session.getId());
 		} catch (ValidationException e) {
-			throw new ServiceException("unable to Delete Seat");
+			throw new ServiceException("unable to Delete Seat",e);
 		}	
 	}
 	

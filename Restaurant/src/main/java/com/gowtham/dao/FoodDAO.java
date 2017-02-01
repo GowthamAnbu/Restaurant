@@ -1,7 +1,6 @@
 package com.gowtham.dao;
 
 import java.util.List;
-import java.util.ListIterator;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -35,18 +34,13 @@ public class FoodDAO {
 
 	public List<Food> list(){
 		final String sql="select ID,NAME,PRICE FROM SEED_FOOD";
-		final List<Food> list=jdbcTemplate.query(sql, (rs,rowNum)->{
+		return jdbcTemplate.query(sql, (rs,rowNum)->{
 			final Food food=new Food();
 			food.setId(rs.getInt("ID"));
 			food.setName(rs.getString("NAME"));
 			food.setPrice(rs.getInt("Price"));
 			return food;
 		});
-		return list;
-		/*final ListIterator<Food> listIterator=list.listIterator();
-		while(listIterator.hasNext()){
-			System.out.println(listIterator.next());
-		}*/
 	}
 	public Boolean ispresent(String name){
 		String sql="select isitem_present(?)";
