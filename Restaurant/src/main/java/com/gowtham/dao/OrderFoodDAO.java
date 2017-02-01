@@ -1,8 +1,6 @@
 package com.gowtham.dao;
 
-import java.time.format.DateTimeFormatter;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -14,26 +12,23 @@ import com.gowtham.util.ConnectionUtil;
 public class OrderFoodDAO {
 	JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 	
-	public void save(final OrderFood orderFood){
+	public int save(final OrderFood orderFood){
 		final String sql="insert into ORDER_FOOD_MAINTENANCE (ORDER_ID,FOOD_ID,QUANTITY,ORDERED_TIME,STATUS) VALUES(?,?,?,?,?)";
 		final Object[] params={orderFood.getOrder().getId(),orderFood.getFood().getId(),orderFood.getQuantity(),orderFood.getOrderedTime(),orderFood.getStatus()};
-		final int rows = jdbcTemplate.update(sql, params);
-		System.out.println("No of rows inserted: "+rows);
+		return jdbcTemplate.update(sql, params);
 	}
 	
-	public void update(final Integer id,final String status){
+	public int update(final Integer id,final String status){
 		final String sql="update ORDER_FOOD_MAINTENANCE set STATUS=? where ID=?";
-		final int rows = jdbcTemplate.update(sql,status,id);
-		System.out.println("No of rows updated: "+rows);
+		return jdbcTemplate.update(sql,status,id);
 	}
 	
-	public void delete(final Integer id){
+	public int delete(final Integer id){
 		
 		final String sql="delete from ORDER_FOOD_MAINTENANCE WHERE ID=?";
-		final int rows = jdbcTemplate.update(sql, id);
-		System.out.println("No of rows deleted: "+rows);
+		return jdbcTemplate.update(sql, id);
 	}
-	public void list(){
+	public List<OrderFood> list(){
 		final String sql="SELECT ID,ORDER_ID,FOOD_ID,QUANTITY,ORDERED_TIME,STATUS FROM ORDER_FOOD_MAINTENANCE";
 		final List<OrderFood> list=jdbcTemplate.query(sql, (rs,rowNum)->{
 			final OrderFood orderFood = new OrderFood();
@@ -49,7 +44,8 @@ public class OrderFoodDAO {
 			orderFood.setStatus(rs.getString("STATUS"));
 			return orderFood;
 		});
-		final ListIterator<OrderFood> listIterator=list.listIterator();
+		return list;
+		/*final ListIterator<OrderFood> listIterator=list.listIterator();
 		while(listIterator.hasNext()){
 			final OrderFood orderFood = listIterator.next();
 			System.out.println("ID : "+orderFood.getId()+" "+
@@ -58,11 +54,11 @@ public class OrderFoodDAO {
 			"QUANTITY : "+orderFood.getQuantity()+" "+
 			"ORDERED TIME : "+DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").format(orderFood.getOrderedTime())+" "+
 			"STATUS : "+orderFood.getStatus());
-		}
+		}*/
 	}
-	public void isOrdered(Integer orderId,Integer foodId){
+	public Boolean isOrdered(Integer orderId,Integer foodId){
 		String sql="select isfood_ordered(?,?)";
 		Object[] args={orderId,foodId};
-		System.out.println(jdbcTemplate.queryForObject(sql, args, Boolean.class));
+		return jdbcTemplate.queryForObject(sql, args, Boolean.class);
 	}
 }

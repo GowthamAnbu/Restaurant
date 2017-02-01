@@ -10,28 +10,28 @@ public class OrderService {
 	private OrderValidator orderValidator = new OrderValidator();
 	private OrderDAO orderDAO = new OrderDAO();
 	
-	public void save(Order order) throws ServiceException{
+	public int save(Order order) throws ServiceException{
 		try {
 			orderValidator.validateSave(order);
-			orderDAO.save(order);
+			return orderDAO.save(order);
 		} catch (ValidationException e) {
 			throw new ServiceException("unable to Insert Seat");
 		}	
 	}
 	
-	public void update(Order order) throws ServiceException{
+	public int update(Order order) throws ServiceException{
 		try {
 			orderValidator.validateUpdate(order);
-			orderDAO.update(order.getId(),order.getStatus());
+			return orderDAO.update(order.getId(),order.getStatus());
 		} catch (ValidationException e) {
 			throw new ServiceException("unable to Update Seat");
 		}	
 	}
 
-	public void delete(Order order) throws ServiceException{
+	public int delete(Order order) throws ServiceException{
 		try {
 			orderValidator.validateDelete(order);
-			orderDAO.delete(order.getId());
+			return orderDAO.delete(order.getId());
 		} catch (ValidationException e) {
 			throw new ServiceException("unable to Delete Seat");
 		}	

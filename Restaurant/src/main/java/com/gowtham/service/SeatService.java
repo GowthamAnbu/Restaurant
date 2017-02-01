@@ -1,5 +1,7 @@
 package com.gowtham.service;
 
+import java.util.List;
+
 import com.gowtham.dao.SeatDAO;
 import com.gowtham.exception.ServiceException;
 import com.gowtham.exception.ValidationException;
@@ -55,6 +57,10 @@ public class SeatService {
 			throw new ServiceException("unable to delete Seat",e);
 		}
 
+	}
+	
+	public List<Seat> findAll(Seat seat) throws ServiceException{
+			return seatDAO.findAll();
 	}
 	
 	public Seat findOne(Seat seat) throws ServiceException{

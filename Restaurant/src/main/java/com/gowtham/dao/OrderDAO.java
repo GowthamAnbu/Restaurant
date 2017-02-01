@@ -2,7 +2,6 @@ package com.gowtham.dao;
 
 import java.sql.Types;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Map;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -17,28 +16,25 @@ import com.gowtham.util.ConnectionUtil;
 
 public class OrderDAO {
 	JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
-
-	public void save(final Order order) {
+	
+	public int save(final Order order) {
 		final String sql = "insert into ORDERS (SEAT_NUMBER,TOTAL_PRICE,STATUS) VALUES(?,?,?)";
 		final Object[] params = { order.getSeat().getNumber(), order.getTotalPrice(), order.getStatus() };
-		final int rows = jdbcTemplate.update(sql, params);
-		System.out.println("No of rows inserted: " + rows);
+		return jdbcTemplate.update(sql, params);
 	}
 
-	public void update(final Integer id, final String status) {
+	public int update(final Integer id, final String status) {
 		final String sql = "update ORDERS set STATUS=? where ID=?";
-		final int rows = jdbcTemplate.update(sql, status, id);
-		System.out.println("No of rows updated: " + rows);
+		return jdbcTemplate.update(sql, status, id);
 	}
 
-	public void delete(final Integer id) {
+	public int delete(final Integer id) {
 
 		final String sql = "delete from ORDERS WHERE ID=?";
-		final int rows = jdbcTemplate.update(sql, id);
-		System.out.println("No of rows deleted: " + rows);
+		return jdbcTemplate.update(sql, id);
 	}
 
-	public void list() {
+	public List<Order> list() {
 		final String sql = "SELECT ID,SEAT_NUMBER,TOTAL_PRICE,STATUS FROM ORDERS";
 		final List<Order> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
 			final Order order = new Order();
@@ -50,18 +46,19 @@ public class OrderDAO {
 			order.setStatus(rs.getString("STATUS"));
 			return order;
 		});
-		final ListIterator<Order> listIterator = list.listIterator();
+		return list;
+		/*final ListIterator<Order> listIterator = list.listIterator();
 		while (listIterator.hasNext()) {
 			final Order order = listIterator.next();
 			System.out.println("ID : " + order.getId() + " " + "SEAT NUMBER : " + order.getSeat().getNumber() + " "
 					+ "TOTAL PRICE : " + order.getTotalPrice() + " " + "STATUS : " + order.getStatus());
-		}
+		}*/
 	}
 
-	public void isAvailable(Integer id) {
+	public Boolean isAvailable(Integer id) {
 		String sql = "select isfood_available(?)";
 		Object[] args = { id };
-		System.out.println(jdbcTemplate.queryForObject(sql, args, Boolean.class));
+		return jdbcTemplate.queryForObject(sql, args, Boolean.class);
 	}
 
 	public void placeOrder(Integer seatNumber, String itemName, String quantity) {

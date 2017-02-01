@@ -11,28 +11,28 @@ public class FoodService {
 	private FoodValidator foodValidator = new FoodValidator();
 	private FoodDAO limitDAO = new FoodDAO();
 	
-	public void save(Food food) throws ServiceException {
+	public int save(Food food) throws ServiceException {
 		try {
 			foodValidator.validateSave(food);
-			limitDAO.save(food);
+			return limitDAO.save(food);
 		} catch (ValidationException e) {
 			throw new ServiceException("unable to Insert Seat");
 		}
 	}
 	
-	public void update(Food food) throws ServiceException {
+	public int update(Food food) throws ServiceException {
 		try {
 			foodValidator.validateUpdate(food);
-			limitDAO.update(food.getId(),food.getPrice());
+			return limitDAO.update(food.getId(),food.getPrice());
 		} catch (ValidationException e) {
 			throw new ServiceException("unable to Update Seat");
 		}
 	}
 	
-	public void delete(Food food) throws ServiceException {
+	public int delete(Food food) throws ServiceException {
 		try {
 			foodValidator.validateDelete(food);
-			limitDAO.delete(food.getId());
+			return limitDAO.delete(food.getId());
 		} catch (ValidationException e) {
 			throw new ServiceException("unable to delete Seat");
 		}

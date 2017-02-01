@@ -57,7 +57,8 @@ public class SeatDAO implements DAO<Seat>{
 	public Seat findOne(final Integer id) {
 
 		final String sql = "select SEAT_NUMBER,ACTIVE FROM SEED_SEAT WHERE SEATNUMBER=?";
-		final Seat seat = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+		Object[] args={id};
+		final Seat seat = jdbcTemplate.queryForObject(sql, args, (rs, rowNum) -> {
 			final Seat s = new Seat();
 			s.setNumber(rs.getInt("SEAT_NUMBER"));
 			s.setActive(rs.getBoolean("ACTIVE"));

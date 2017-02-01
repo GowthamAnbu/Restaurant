@@ -2,7 +2,6 @@ package com.gowtham.dao;
 
 import java.time.LocalTime;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
@@ -12,31 +11,28 @@ import com.gowtham.util.ConnectionUtil;
 public class SessionDAO {
 	private JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 	
-	public void save(final Session session) {
+	public int save(final Session session) {
 
 		final String sql = "insert into SEED_SESSION(ID,NAME,START_TIME,END_TIME) values(?,?,?,?)";
 		final Object[] params = { session.getId(),session.getName(),session.getStartTime(),session.getEndTime()};
-		final int rows = jdbcTemplate.update(sql, params);
-		System.out.println("No of rows inserted: " + rows);
+		return jdbcTemplate.update(sql, params);
 
 	}
 	
-	public void update(final Integer id,final LocalTime startTime,final LocalTime endTime) {
+	public int update(final Integer id,final LocalTime startTime,final LocalTime endTime) {
 
 		final String sql = "update SEED_SESSION set START_TIME=?,END_TIME=? where ID=?";
-		final int rows = jdbcTemplate.update(sql,startTime,endTime,id);
-		System.out.println("No of rows updated: " + rows);
+		return jdbcTemplate.update(sql,startTime,endTime,id);
 
 	}
 	
-	public void delete(final Integer id) {
+	public int delete(final Integer id) {
 
 		final String sql = "delete from SEED_SESSION where ID=?";
-		final int rows = jdbcTemplate.update(sql, id);
-		System.out.println("No of rows deleted: " + rows);
+		return jdbcTemplate.update(sql, id);
 
 	}
-	public void list(){
+	public List<Session> list(){
 	final String sql="SELECT ID,NAME,START_TIME,END_TIME FROM SEED_SESSION";
 	final List<Session> list=jdbcTemplate.query(sql,(rs,rowNum)->{
 		final Session session = new Session();
@@ -46,11 +42,11 @@ public class SessionDAO {
 		session.setEndTime(rs.getTime("END_TIME").toLocalTime());
 		return session;
 	});
-	
-	final ListIterator<Session> listIterator=list.listIterator();
+	return list;
+	/*final ListIterator<Session> listIterator=list.listIterator();
 		while(listIterator.hasNext()){
 			System.out.println(listIterator.next());
-		}
+		}*/
 	}
 	
 }
