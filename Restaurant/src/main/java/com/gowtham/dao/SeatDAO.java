@@ -1,6 +1,5 @@
 package com.gowtham.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -15,8 +14,8 @@ public class SeatDAO implements DAO<Seat>{
 	@Override
 	public int save(final Seat seat) {
 
-		final String sql = "INSERT INTO SEED_SEAT (ACTIVE) VALUES(?)";
-		final Object[] params = {seat.getActive() };
+		final String sql = "INSERT INTO SEED_SEAT (SEAT_NUMBER,ACTIVE) VALUES(?,?)";
+		final Object[] params = {seat.getNumber(),seat.getActive() };
 		return jdbcTemplate.update(sql, params);
 
 	}
@@ -71,23 +70,13 @@ public class SeatDAO implements DAO<Seat>{
 		}*/	
 	}
 	
-	public void isPresent(final Integer number,final String message)throws SQLException{
+	public Boolean isPresent(final Integer number){
 		String sql="select isseat_number(?)";
 		Object[] args={number};
 		Boolean result = jdbcTemplate.queryForObject(sql,args,Boolean.class);
-		if(result){
-			throw new SQLException(message);
-		}
+		return result;
 	}
 	
-	public void isNotPresent(final Integer number,final String message)throws SQLException{
-		String sql="select isseat_number(?)";
-		Object[] args={number};
-		Boolean result = jdbcTemplate.queryForObject(sql,args,Boolean.class);
-		if(!result){
-			throw new SQLException(message);
-		}
-	}
 	
 	public boolean isActive(final Integer number){
 		String sql="select isseat_number_active(?)";

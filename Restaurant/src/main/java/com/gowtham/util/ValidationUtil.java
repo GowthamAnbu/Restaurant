@@ -17,7 +17,7 @@ public class ValidationUtil {
 	}
 	
 	public static boolean isValid(Integer number){
-		return(number!=null && number.intValue()>0);
+		return(number!=null && number >0);
 	}
 	
 	public static void isNotValid(Integer number,String message)throws ValidationException{

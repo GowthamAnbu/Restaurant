@@ -7,11 +7,11 @@ public class TestSeatService{
 
 	public static void main(String[] args) throws ServiceException{
 		Seat seat = new Seat(); 
-		seat.setNumber(10);
-		seat.setActive(true);
+		seat.setNumber(11);
+		seat.setActive(false);
 		SeatService seatService = new SeatService();
-			System.out.println("No of rows updated: "+seatService.save(seat));
+			System.out.println("No of rows inserted: "+seatService.save(seat));
 			System.out.println("No of rows updated: "+seatService.update(seat));
-			System.out.println("No of rows updated: "+seatService.delete(seat));
+			System.out.println("No of rows deleted: "+seatService.delete(seat));
 	}
 }

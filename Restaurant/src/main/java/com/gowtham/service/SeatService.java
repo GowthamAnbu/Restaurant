@@ -1,10 +1,8 @@
 package com.gowtham.service;
 
-import java.sql.SQLException;
-
 import com.gowtham.dao.SeatDAO;
-import com.gowtham.exception.ValidationException;
 import com.gowtham.exception.ServiceException;
+import com.gowtham.exception.ValidationException;
 import com.gowtham.model.Seat;
 import com.gowtham.validator.SeatValidator;
 
@@ -17,9 +15,12 @@ public class SeatService {
 
 		try {
 			seatValidator.validateSave(seat);
-			seatDAO.isPresent(seat.getNumber(),"Seat already present");
+			Boolean result = seatDAO.isPresent(seat.getNumber());
+			if(result){
+				throw new ServiceException("Seat already present");
+			}
 			return seatDAO.save(seat);
-		} catch (ValidationException | SQLException e) {
+		} catch (ValidationException e) {
 			throw new ServiceException("unable to Insert Seat",e);
 		}
 
@@ -28,11 +29,14 @@ public class SeatService {
 	public int update(Seat seat) throws ServiceException{
 
 		try {
-			seatValidator.validateUpdate(seat);
-			seatDAO.isNotPresent(seat.getNumber(),"Seat not present");
+			seatValidator.validateSave(seat);
+			Boolean result = seatDAO.isPresent(seat.getNumber());
+			if(!result){
+				throw new ServiceException("Seat not present");
+			}
 			return seatDAO.update(seat);
 			}
-		catch (ValidationException | SQLException e) {
+		catch (ValidationException e) {
 			throw new ServiceException("unable to Update Seat",e);
 		}
 
@@ -42,12 +46,37 @@ public class SeatService {
 
 		try {
 			seatValidator.validateDelete(seat);
-			seatDAO.isNotPresent(seat.getNumber(),"Seat not present");
+			Boolean result = seatDAO.isPresent(seat.getNumber());
+			if(!result){
+				throw new ServiceException("Seat not present");
+			}
 			return seatDAO.delete(seat.getNumber());
-		} catch (ValidationException | SQLException e) {
+		} catch (ValidationException e) {
 			throw new ServiceException("unable to delete Seat",e);
 		}
 
 	}
 	
+	public Seat findOne(Seat seat) throws ServiceException{
+
+		try {
+			seatValidator.validateDelete(seat);
+			return seatDAO.findOne(seat.getNumber());
+		} catch (ValidationException e) {
+			throw new ServiceException("invalid number input",e);
+		}
+
+	}
+	
+	public boolean isActive(Seat seat) throws ServiceException{
+
+		try {
+			seatValidator.validateDelete(seat);
+			return seatDAO.isActive(seat.getNumber());
+		} catch (ValidationException e) {
+			throw new ServiceException("invalid number input",e);
+		}
+
+	}
 }
+

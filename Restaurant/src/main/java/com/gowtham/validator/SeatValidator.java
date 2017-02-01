@@ -25,15 +25,11 @@ public class SeatValidator{
 		validateActive(seat.getActive());
 	}
 	
-	public void validateUpdate(Seat seat) throws ValidationException{
-		validateSeat(seat);
-		validateSeatNumber(seat.getNumber());
-		validateActive(seat.getActive());
-	}
-	
 	public void validateDelete(Seat seat) throws ValidationException{
 		validateSeat(seat);
 		validateSeatNumber(seat.getNumber());
 	}
+	
+	
 	
 }
