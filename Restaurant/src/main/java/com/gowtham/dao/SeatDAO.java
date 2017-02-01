@@ -1,34 +1,43 @@
 package com.gowtham.dao;
 
+import java.sql.SQLException;
 import java.util.List;
-import java.util.ListIterator;
 
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.gowtham.model.Seat;
 import com.gowtham.util.ConnectionUtil;
 
-public class SeatDAO {
+public class SeatDAO implements DAO<Seat>{
 
 	private JdbcTemplate jdbcTemplate = ConnectionUtil.getJdbcTemplate();
 
-	public void save(final Seat seat) {
+	@Override
+	public int save(final Seat seat) {
 
-		final String sql = "insert into SEED_SEAT (SEAT_NUMBER,ACTIVE) values(?,?)";
-		final Object[] params = { seat.getNumber(), seat.getActive() };
-		final int rows = jdbcTemplate.update(sql, params);
-		System.out.println("No of rows inserted: " + rows);
+		final String sql = "INSERT INTO SEED_SEAT (ACTIVE) VALUES(?)";
+		final Object[] params = {seat.getActive() };
+		return jdbcTemplate.update(sql, params);
 
 	}
 	
-	public void delete(final Integer number)
-	{
-		final String sql="delete from SEED_SEAT where SEAT_NUMBER=?";
-		final int rows = jdbcTemplate.update(sql,number);
-		System.out.println("No of rows deleted: "+ rows);
+	@Override
+	public int update(final Seat seat) {
+
+		final String sql = "UPDATE SEED_SEAT SET ACTIVE=? WHERE SEAT_NUMBER=?";
+		final Object[] params = {seat.getActive(), seat.getNumber()};
+		return jdbcTemplate.update(sql, params);
+
 	}
 	
-	public void list() {
+	@Override
+	public int delete(final Integer number){
+		final String sql="DELETE FROM SEED_SEAT WHERE SEAT_NUMBER=?";
+		return jdbcTemplate.update(sql,number);
+	}
+	
+	@Override
+	public List<Seat> findAll() {
 
 		final String sql = "select SEAT_NUMBER,ACTIVE FROM SEED_SEAT";
 		final List<Seat> list = jdbcTemplate.query(sql, (rs, rowNum) -> {
@@ -37,20 +46,53 @@ public class SeatDAO {
 			seat.setActive(rs.getBoolean("ACTIVE"));
 			return seat;
 
-		});	
-		final ListIterator<Seat> listIterator=list.listIterator();
+		});
+		return list;
+		/*final ListIterator<Seat> listIterator=list.listIterator();
 		while(listIterator.hasNext()){
 			System.out.println(listIterator.next());
-		}	
+		}*/	
 	}
-	public Boolean isPresent(final Integer number){
+
+	@Override
+	public Seat findOne(final Integer id) {
+
+		final String sql = "select SEAT_NUMBER,ACTIVE FROM SEED_SEAT WHERE SEATNUMBER=?";
+		final Seat seat = jdbcTemplate.queryForObject(sql, (rs, rowNum) -> {
+			final Seat s = new Seat();
+			s.setNumber(rs.getInt("SEAT_NUMBER"));
+			s.setActive(rs.getBoolean("ACTIVE"));
+			return s;
+		});
+		return seat;
+		/*final ListIterator<Seat> listIterator=list.listIterator();
+		while(listIterator.hasNext()){
+			System.out.println(listIterator.next());
+		}*/	
+	}
+	
+	public void isPresent(final Integer number,final String message)throws SQLException{
 		String sql="select isseat_number(?)";
 		Object[] args={number};
-		return jdbcTemplate.queryForObject(sql,args,Boolean.class);		
+		Boolean result = jdbcTemplate.queryForObject(sql,args,Boolean.class);
+		if(result){
+			throw new SQLException(message);
+		}
 	}
-	public void isActive(final Integer number){
+	
+	public void isNotPresent(final Integer number,final String message)throws SQLException{
+		String sql="select isseat_number(?)";
+		Object[] args={number};
+		Boolean result = jdbcTemplate.queryForObject(sql,args,Boolean.class);
+		if(!result){
+			throw new SQLException(message);
+		}
+	}
+	
+	public boolean isActive(final Integer number){
 		String sql="select isseat_number_active(?)";
 		Object[] args={number};
-		System.out.println(jdbcTemplate.queryForObject(sql, args, Boolean.class));
+		return jdbcTemplate.queryForObject(sql, args, Boolean.class);
 	}
+
 }

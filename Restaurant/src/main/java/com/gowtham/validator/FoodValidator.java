@@ -6,27 +6,19 @@ import com.gowtham.util.ValidationUtil;
 
 public class FoodValidator {
 	private void validateFood(Food food) throws ValidationException {
-		if (ValidationUtil.isNotValid(food)) {
-				throw new ValidationException("Invalid Food Input");
-		}
+		ValidationUtil.isNotValid(food,"Invalid Food Input");
 	}
 	
 	private void validateId(Integer id)throws ValidationException{
-			if (ValidationUtil.isNotValid(id)) {
-				throw new ValidationException("Invalid Id Input"); 
-			}
+			ValidationUtil.isNotValid(id,"Invalid Id Input");
 		}
 	
 	private void validateName(String name)throws ValidationException{
-		if (ValidationUtil.isNotValid(name)){
-			throw new ValidationException("Invalid Name Input");
-		}
+		ValidationUtil.isNotValid(name,"Invalid Name Input");
 	}
 	
 	private void validatePrice(Integer price)throws ValidationException{
-		if (ValidationUtil.isNotValid(price)){
-			throw new ValidationException("Invalid Price Input");
-		}
+		ValidationUtil.isNotValid(price,"Invalid Price Input");
 	}
 	
 	

@@ -9,45 +9,32 @@ import com.gowtham.util.ValidationUtil;
 public class FoodDetailsValidator {
 
 	private void validateFoodDetails(FoodDetails foodDetails) throws ValidationException {
-		if (ValidationUtil.isNotValid(foodDetails)) {
-				throw new ValidationException("Invalid FoodDetails Input");
-		}
+		ValidationUtil.isNotValid(foodDetails,"Invalid FoodDetails Input");
 	}
 	
 	private void validateFood(Food food) throws ValidationException {
-		if (ValidationUtil.isNotValid(food)) {
-				throw new ValidationException("Invalid Food Input");
-		}
+		ValidationUtil.isNotValid(food,"Invalid Food Input");
 	}
 	
 	private void validateSession(Session session) throws ValidationException {
-		if (ValidationUtil.isNotValid(session)) {
-				throw new ValidationException("Invalid Session Input");
-		}
+		ValidationUtil.isNotValid(session,"Invalid Session Input");
+		
 	}
 	
 	private void validateFoodId(Integer id)throws ValidationException{
-		if (ValidationUtil.isNotValid(id)) {
-			throw new ValidationException("Invalid FoodId Input"); 
-		}
+		ValidationUtil.isNotValid(id,"Invalid FoodId Input");
 	}
 	
 	private void validateSessionId(Integer id)throws ValidationException{
-		if (ValidationUtil.isNotValid(id)) {
-			throw new ValidationException("Invalid SessionId Input"); 
-		}
+		ValidationUtil.isNotValid(id,"Invalid SessionId Input");
 	}
 	
 	private void validateId(Integer id)throws ValidationException{
-			if (ValidationUtil.isNotValid(id)) {
-				throw new ValidationException("Invalid Id Input"); 
-			}
+			ValidationUtil.isNotValid(id,"Invalid Id Input");
 		}
 	
 	private void validateQuantity(Integer quantity)throws ValidationException{
-		if (ValidationUtil.isNotValid(quantity)) {
-			throw new ValidationException("Invalid Quanity Input"); 
-		}
+		ValidationUtil.isNotValid(quantity,"Invalid Quanity Input");
 	}
 	
 	public void validateSave(FoodDetails foodDetails)throws ValidationException{

@@ -1,5 +1,7 @@
 package com.gowtham.service;
 
+import java.sql.SQLException;
+
 import com.gowtham.dao.SeatDAO;
 import com.gowtham.exception.ValidationException;
 import com.gowtham.exception.ServiceException;
@@ -11,23 +13,39 @@ public class SeatService {
 	private SeatValidator seatValidator = new SeatValidator();
 	private SeatDAO seatDAO = new SeatDAO();
 
-	public void save(Seat seat) throws ServiceException {
+	public int save(Seat seat) throws ServiceException {
 
 		try {
 			seatValidator.validateSave(seat);
-			seatDAO.save(seat);
-		} catch (ValidationException e) {
-			throw new ServiceException("unable to Insert Seat");
+			seatDAO.isPresent(seat.getNumber(),"Seat already present");
+			return seatDAO.save(seat);
+		} catch (ValidationException | SQLException e) {
+			throw new ServiceException("unable to Insert Seat",e);
 		}
 
 	}
-	public void delete(Seat seat) throws ServiceException {
+	
+	public int update(Seat seat) throws ServiceException{
+
+		try {
+			seatValidator.validateUpdate(seat);
+			seatDAO.isNotPresent(seat.getNumber(),"Seat not present");
+			return seatDAO.update(seat);
+			}
+		catch (ValidationException | SQLException e) {
+			throw new ServiceException("unable to Update Seat",e);
+		}
+
+	}
+	
+	public int delete(Seat seat) throws ServiceException{
 
 		try {
 			seatValidator.validateDelete(seat);
-			seatDAO.delete(seat.getNumber());
-		} catch (ValidationException e) {
-			throw new ServiceException("unable to delete Seat");
+			seatDAO.isNotPresent(seat.getNumber(),"Seat not present");
+			return seatDAO.delete(seat.getNumber());
+		} catch (ValidationException | SQLException e) {
+			throw new ServiceException("unable to delete Seat",e);
 		}
 
 	}

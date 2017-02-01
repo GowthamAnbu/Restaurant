@@ -7,39 +7,27 @@ import com.gowtham.util.ValidationUtil;
 
 public class OrderValidator {
 	private void validateOrder(Order order) throws ValidationException {
-		if (ValidationUtil.isNotValid(order)) {
-				throw new ValidationException("Invalid Order Input");
-		}
+		ValidationUtil.isNotValid(order,"Invalid Order Input");
 	}
 	
 	private void validateOrderId(Integer seatNumber)throws ValidationException{
-		if (ValidationUtil.isNotValid(seatNumber)) {
-			throw new ValidationException("Invalid SeatNumber Input"); 
-		}
+		ValidationUtil.isNotValid(seatNumber,"Invalid SeatNumber Input");
 	}
 	
 	private void validateSeat(Seat seat) throws ValidationException {
-		if (ValidationUtil.isNotValid(seat)) {
-				throw new ValidationException("Invalid Seat Input");
-		}
+		ValidationUtil.isNotValid(seat,"Invalid Seat Input");
 	}
 	
 	private void validateSeatNumber(Integer seatNumber)throws ValidationException{
-		if (ValidationUtil.isNotValid(seatNumber)) {
-			throw new ValidationException("Invalid SeatNumber Input"); 
-		}
+		ValidationUtil.isNotValid(seatNumber,"Invalid SeatNumber Input");
 	}
 		
 	private void validateTotalPrice(Integer totalPrice)throws ValidationException{
-		if (ValidationUtil.isNotValid(totalPrice)) {
-			throw new ValidationException("Invalid TotalPrice Input"); 
-		}
+		ValidationUtil.isNotValid(totalPrice,"Invalid TotalPrice Input");
 	}
 	
 	private void validateStatus(String status)throws ValidationException{
-		if (ValidationUtil.isNotValid(status)) {
-			throw new ValidationException("Invalid Status Input"); 
-		}
+		ValidationUtil.isNotValid(status,"Invalid Status Input");
 	}
 	
 	public void validateSave(Order order)throws ValidationException{

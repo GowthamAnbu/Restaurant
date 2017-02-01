@@ -7,27 +7,19 @@ import com.gowtham.util.ValidationUtil;
 public class LimitValidator {
 	
 	private void validateLimit(Limit limit) throws ValidationException {
-		if (ValidationUtil.isNotValid(limit)) {
-				throw new ValidationException("Invalid Limit Input");
-		}
+		ValidationUtil.isNotValid(limit,"Invalid Limit Input");
 	}
 	
 	private void validateId(Integer id)throws ValidationException{
-			if (ValidationUtil.isNotValid(id)) {
-				throw new ValidationException("Invalid Id Input"); 
-			}
+			ValidationUtil.isNotValid(id,"Invalid Id Input");
 		}
 	
 	private void validateName(String name)throws ValidationException{
-		if (ValidationUtil.isNotValid(name)){
-			throw new ValidationException("Invalid Name Input");
-		}
+		ValidationUtil.isNotValid(name,"Invalid Name Input");
 	}
 	
 	private void validateMaxLimit(Integer maxLimit)throws ValidationException{
-		if (ValidationUtil.isNotValid(maxLimit)){
-			throw new ValidationException("Invalid MaxLimit Input");
-		}
+		ValidationUtil.isNotValid(maxLimit,"Invalid MaxLimit Input");
 	}
 	
 	

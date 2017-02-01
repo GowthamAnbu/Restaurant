@@ -8,24 +8,24 @@ import com.gowtham.util.ValidationUtil;
 public class SeatValidator{
 	
 	private void validateSeat(Seat seat) throws ValidationException {
-		if (ValidationUtil.isNotValid(seat)) {
-				throw new ValidationException("Invalid Seat");
-		}
+		ValidationUtil.isNotValid(seat,"Invalid Seat");
 	}
 	
 	private void validateSeatNumber(Integer seatnumber)throws ValidationException{
-			if (ValidationUtil.isNotValid(seatnumber)) {
-				throw new ValidationException("Invalid Seat Number Input"); 
-			}
-		}
+		ValidationUtil.isNotValid(seatnumber,"Invalid Seatnumber");
+	}
 	
 	private void validateActive(Boolean active)throws ValidationException{
-		if (ValidationUtil.isNotValid(active)){
-			throw new ValidationException("Invalid Active Input");
-		}
+		ValidationUtil.isNotValid(active,"Invalid Active");
 	}
 	
 	public void validateSave(Seat seat) throws ValidationException{
+		validateSeat(seat);
+		validateSeatNumber(seat.getNumber());
+		validateActive(seat.getActive());
+	}
+	
+	public void validateUpdate(Seat seat) throws ValidationException{
 		validateSeat(seat);
 		validateSeatNumber(seat.getNumber());
 		validateActive(seat.getActive());
